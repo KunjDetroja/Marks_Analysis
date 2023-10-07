@@ -18,7 +18,8 @@ def main(request):
     return render ( request , 'main.html' )
 
 def home(request):
-    searchTerm = request.GET.get('search')
+    searchTerm1 = request.GET.get('search1')
+    searchTerm2 = request.GET.get('search2')
     Filter = request.GET.get('filter')
     Order = request.GET.get('order')
     Sort = request.GET.get('sort')
@@ -26,32 +27,43 @@ def home(request):
     if Sort == '0' and Order:
         Norder = '-'+Order
     if Order:
-        if searchTerm:
+        if searchTerm1 or searchTerm2:
             if 'All' == Filter:
-                marks = Marksheet.objects.filter(Name__icontains=searchTerm).order_by(
-                    Order) | Marksheet.objects.filter(Div__icontains=searchTerm).order_by(
-                    Order) | Marksheet.objects.filter(Roll_No__icontains=searchTerm).order_by(
-                    Order) | Marksheet.objects.filter(Mentor__icontains=searchTerm).order_by(
-                    Order) | Marksheet.objects.filter(Enrollment__icontains=searchTerm).order_by(
-                    Order) | Marksheet.objects.filter(Branch__icontains=searchTerm).order_by(Order)
+                marks = Marksheet.objects.filter(Name__icontains=searchTerm1).order_by(
+                    Order) | Marksheet.objects.filter(Div__icontains=searchTerm1).order_by(
+                    Order) | Marksheet.objects.filter(Roll_No__icontains=searchTerm1).order_by(
+                    Order) | Marksheet.objects.filter(Mentor__icontains=searchTerm1).order_by(
+                    Order) | Marksheet.objects.filter(Enrollment__icontains=searchTerm1).order_by(
+                    Order) | Marksheet.objects.filter(Branch__icontains=searchTerm1).order_by(Order)|Marksheet.objects.filter(Name__icontains=searchTerm2).order_by(
+                    Order) | Marksheet.objects.filter(Div__icontains=searchTerm2).order_by(
+                    Order) | Marksheet.objects.filter(Roll_No__icontains=searchTerm2).order_by(
+                    Order) | Marksheet.objects.filter(Mentor__icontains=searchTerm2).order_by(
+                    Order) | Marksheet.objects.filter(Enrollment__icontains=searchTerm2).order_by(
+                    Order) | Marksheet.objects.filter(Branch__icontains=searchTerm2).order_by(Order)
             elif 'Name' == Filter:
                 marks = Marksheet.objects.filter(
-                    Name__icontains=searchTerm).order_by(Order)
+                    Name__icontains=searchTerm1).order_by(Order) | Marksheet.objects.filter(
+                    Name__icontains=searchTerm2).order_by(Order)
             elif 'Div' == Filter:
                 marks = Marksheet.objects.filter(
-                    Div__icontains=searchTerm).order_by(Order)
+                    Div__icontains=searchTerm1).order_by(Order)|Marksheet.objects.filter(
+                    Div__icontains=searchTerm2).order_by(Order)
             elif 'Roll_No' == Filter:
                 marks = Marksheet.objects.filter(
-                    Roll_No__icontains=searchTerm).order_by(Order)
+                    Roll_No__icontains=searchTerm1).order_by(Order)|Marksheet.objects.filter(
+                    Roll_No__icontains=searchTerm2).order_by(Order)
             elif 'Mentor' == Filter:
                 marks = Marksheet.objects.filter(
-                    Mentor__icontains=searchTerm).order_by(Order)
+                    Mentor__icontains=searchTerm1).order_by(Order)|Marksheet.objects.filter(
+                    Mentor__icontains=searchTerm2).order_by(Order)
             elif 'Enrollment' == Filter:
                 marks = Marksheet.objects.filter(
-                    Enrollment__icontains=searchTerm).order_by(Order)
+                    Enrollment__icontains=searchTerm1).order_by(Order)|Marksheet.objects.filter(
+                    Enrollment__icontains=searchTerm2).order_by(Order)
             elif 'Branch' == Filter:
                 marks = Marksheet.objects.filter(
-                    Branch__icontains=searchTerm).order_by(Order)
+                    Branch__icontains=searchTerm1).order_by(Order)|Marksheet.objects.filter(
+                    Branch__icontains=searchTerm2).order_by(Order)
         else:
             marks = Marksheet.objects.all().order_by(Order)
 
@@ -59,7 +71,7 @@ def home(request):
         marks = Marksheet.objects.all().order_by("Roll_No")
     if Sort == '0' and Order:
         marks = marks.order_by(Norder)
-    return render(request, 'home.html', {'marks': marks, 'searchTerm': searchTerm, 'Filter': Filter, 'Order': Order, 'Norder': Norder})
+    return render(request, 'home.html', {'marks': marks, 'Filter': Filter, 'Order': Order, 'Norder': Norder})
     # return HttpResponse('<h1>Welcome to Home Page</h1>')
 
 
@@ -77,7 +89,23 @@ def detail(request, marks_id):
     if Subject == 'All':
         Title = ''
         rank = 1
-        if Test == 'T2':
+        if Test == 'All':
+            dm = marks.DM_T1+marks.DM_T2+marks.DM_T3+marks.DM_T4
+            coa = marks.COA_T2+marks.COA_T1+marks.COA_T3+marks.COA_T4
+            toc = marks.TOC_T2+marks.TOC_T1+marks.TOC_T3+marks.TOC_T4
+            fsd = marks.FSD_2_T2+marks.FSD_2_T1+marks.FSD_2_T3+marks.FSD_2_T4
+            fcsp = marks.FCSP_2_T2+marks.FCSP_2_T1+marks.FCSP_2_T3+marks.FCSP_2_T4
+            for i in range(len(student)):
+                dms = student[i].DM_T1+student[i].DM_T2+student[i].DM_T3+student[i].DM_T4
+                coas = student[i].COA_T2+student[i].COA_T1+student[i].COA_T3+student[i].COA_T4
+                tocs = student[i].TOC_T2+student[i].TOC_T1+student[i].TOC_T3+student[i].TOC_T4
+                fsds = student[i].FSD_2_T2+student[i].FSD_2_T1+student[i].FSD_2_T3+student[i].FSD_2_T4
+                fcsps = student[i].FCSP_2_T2+student[i].FCSP_2_T1+student[i].FCSP_2_T3+student[i].FCSP_2_T4
+                if ( dms+coas+tocs+fsds+fcsps> dm+coa+toc+fsd+fcsp):
+                    rank += 1
+            Title = 'All Test Marks(Out of 100) Rank: ' + str(rank) + '/' + str(len(student))
+
+        elif Test == 'T2':
             dm = marks.DM_T2
             coa = marks.COA_T2
             toc = marks.TOC_T2
@@ -86,7 +114,7 @@ def detail(request, marks_id):
             for i in range(len(student)):
                 if (student[i].DM_T2+student[i].COA_T2+student[i].TOC_T2+student[i].FSD_2_T2+student[i].FCSP_2_T2 > dm+coa+toc+fsd+fcsp):
                     rank += 1
-            Title = 'T2 Marks(Out of 25) Rank: ' + str(rank)
+            Title = 'T2 Marks(Out of 25) Rank: ' + str(rank) + '/' + str(len(student))
         elif Test == 'T3':
             dm = marks.DM_T3
             coa = marks.COA_T3
@@ -96,7 +124,7 @@ def detail(request, marks_id):
             for i in range(len(student)):
                 if (student[i].DM_T3+student[i].COA_T3+student[i].TOC_T3+student[i].FSD_2_T3+student[i].FCSP_2_T3 > dm+coa+toc+fsd+fcsp):
                     rank += 1
-            Title = 'T3 Marks(Out of 25) Rank: ' + str(rank)
+            Title = 'T3 Marks(Out of 25) Rank: ' + str(rank) + '/' + str(len(student))
         elif Test == 'T4':
             dm = marks.DM_T4
             coa = marks.COA_T4
@@ -106,7 +134,7 @@ def detail(request, marks_id):
             for i in range(len(student)):
                 if (student[i].DM_T4+student[i].COA_T4+student[i].TOC_T4+student[i].FSD_2_T4+student[i].FCSP_2_T4 > dm+coa+toc+fsd+fcsp):
                     rank += 1
-            Title = 'T4 Marks(Out of 25) Rank: ' + str(rank)
+            Title = 'T4 Marks(Out of 25) Rank: ' + str(rank) + '/' + str(len(student))
         else:
             dm = marks.DM_T1
             coa = marks.COA_T1
@@ -263,3 +291,12 @@ def loginacc(request):
 def logoutacc(request):
     logout(request)
     return redirect('main')
+
+def search(request):
+    if request.method == 'GET':
+        search = request.GET.get('Roll_No')
+        if search:
+            detail_url = reverse('detail', args=[search])
+            return redirect(detail_url)
+        else:
+            return render(request, 'search.html')

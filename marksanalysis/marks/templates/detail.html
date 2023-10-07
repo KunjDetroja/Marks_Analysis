@@ -5,25 +5,32 @@
     <div class="mb-3">
       <label class="form-label">Select Test:</label>
       <select name="test" id="" class="form-control">
-          <option value="T1" selected>T1</option>
-          <option value="T2">T2</option>
-          <option value="T3">T3</option>
-          <option value="T4">T4</option>
+        <option value="All" selected>All</option>
+        <option value="T1" >T1</option>
+        <option value="T2">T2</option>
+        <option value="T3">T3</option>
+        <option value="T4">T4</option>
       </select>
       <label class="form-label">Select Subject:</label>
       <select name="subject" id="" class="form-control">
-          <option value="All" selected>All</option>
-          <option value="DM">DM</option>
-          <option value="TOC">TOC</option>
-          <option value="COA">COA</option>
-          <option value="FSD">FSD-2</option>
-          <option value="FCSP">FCSP-2</option>
+        <option value="All" selected>All</option>
+        <option value="DM">DM</option>
+        <option value="TOC">TOC</option>
+        <option value="COA">COA</option>
+        <option value="FSD">FSD-2</option>
+        <option value="FCSP">FCSP-2</option>
       </select>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
-  <img src="data:image/png;base64,{{ graph }}" alt="Matplotlib Graph" class="blog-image">
+  <img
+    src="data:image/png;base64,{{ graph }}"
+    alt="Matplotlib Graph"
+    class="blog-image"
+  />
+  {% if user.is_authenticated %}
   <a class="btn btn-primary me-2" href="{% url 'marksupdate' marks.id %}">Update</a>
+  {% endif %}
 </div>
 
 {% endblock content %}
