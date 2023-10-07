@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Update Marksheet of {{ Name }}</h2>
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Update">
+    </form>
+    <a class="btn btn-primary mt-2" href="{% url 'detail' pk %}">Back</a>
+</div>
+
+    {% comment %} <a href="{% url 'detail' pk %}">Back to List</a> {% endcomment %}
+{% endblock content %}

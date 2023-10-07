@@ -1,0 +1,71 @@
+{% extends "base.html" %} 
+{% block content %}
+
+<div>
+  <div class="container">
+    <form action="">
+      <div class="mb-3">
+        <label class="form-label">Search:</label>
+        <input type="text" name="search" class="form-control" />
+        <label class="form-label">filter:</label>
+        <select name="filter" id="" class="form-control">
+            <option value="All">All</option>
+            <option value="Name">Name</option>
+            <option value="Div">Div</option>
+            <option value="Roll_No">Roll No</option>
+            <option value="Mentor">Mentor</option>
+            <option value="Enrollment">Enrollment</option>
+            <option value="Branch">Branch</option>
+        </select>
+        <label class="form-label">Order By:</label>
+        <label><input type="radio" id="" name="order" value="Roll_No" checked />Roll No</label>
+        <label><input type="radio" id="" name="order" value="Name"/>Name</label>
+        <label><input type="radio" id="" name="order" value="Div" />Div</label><br>
+        <label class="form-label">Sort By:</label>
+        <label><input type="radio" id="" name="sort" value="1" checked />Ascending</label>
+        <label><input type="radio" id="" name="sort" value="0"/>Descending</label>
+        {% comment %} <input type="radio" id="" name="Roll_No" value="Roll_No" checked />Roll No {% endcomment %}
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+  </div>
+  {% comment %} Searching for {{ Norder }} {% endcomment %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Roll No.</th>
+        <th scope="col">Name</th>
+        <th scope="col">Div</th>
+        <th scope="col">Branch</th>
+        <th scope="col">Enrollment</th>
+        <th scope="col">Mentor</th>
+        <th scope="col">Marks Details</th>
+        {% comment %} <th scope="col">DM</th>
+        <th scope="col">TOC</th>
+        <th scope="col">COA</th>
+        <th scope="col">FSD-2</th>
+        <th scope="col">FCSP-2</th> {% endcomment %}
+      </tr>
+    </thead>
+    {% for i in marks %}
+    <tbody>
+      <tr>
+        <td>{{i.Roll_No}}</td>
+        <td>{{i.Name}}</td>
+        <td>{{i.Div}}</td>
+        <td>{{i.Branch}}</td>
+        <td>{{i.Enrollment}}</td>
+        <td>{{i.Mentor}}</td>
+        <td><a href="{% url 'detail' i.id %}" class="btn btn-primary">Details</a></td>
+        {% comment %} <td>{{ i.DM_T1|add:i.DM_T2|add:i.DM_T3|add:i.DM_T4 }}</td>
+        <td>{{i.TOC_T1|add:i.TOC_T2|add:i.TOC_T3|add:i.TOC_T4}}</td>
+        <td>{{i.COA_T1|add:i.COA_T2|add:i.COA_T3|add:i.COA_T4}}</td>
+        <td>{{i.FSD_2_T1|add:i.FSD_2_T2|add:i.FSD_2_T3|add:i.FSD_2_T4}}</td>
+        <td>{{i.FCSP_2_T1|add:i.FCSP_2_T2|add:i.FCSP_2_T3|add:i.FCSP_2_T4}}</td> {% endcomment %}
+      </tr>
+    </tbody>
+    {% endfor %}
+  </table>
+</div>
+
+{% endblock content %}
