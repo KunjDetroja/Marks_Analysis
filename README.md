@@ -22,7 +22,4 @@ The search functionality allows administrators to quickly locate specific studen
 7. CRUD Operations:
 Admins can effortlessly perform Create, Read, Update, and Delete (CRUD) operations on student details. Add new students, update existing records, or remove outdated information – all with a few clicks.
 
-8. Customization:
-Tailor the platform to your institution's needs. The system is designed to be easily customizable, ensuring that it aligns seamlessly with your unique requirements.
-
 Elevate your institution's academic management with our Marks Analysis platform. Facilitate a data-driven approach to student performance evaluation and empower administrators to make informed decisions for continuous improvement. Start your journey towards academic excellence today!
