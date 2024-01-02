@@ -26,6 +26,11 @@ def home(request):
     Norder = ''
     if Sort == '0' and Order:
         Norder = '-'+Order
+    if searchTerm1 or searchTerm2:
+        if searchTerm1 == "":
+            searchTerm1 = searchTerm2
+        if searchTerm2 == "":
+            searchTerm2 = searchTerm1
     if Order:
         if searchTerm1 or searchTerm2:
             if 'All' == Filter:
